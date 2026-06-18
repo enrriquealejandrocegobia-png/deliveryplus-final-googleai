@@ -1,10 +1,4 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-<<<<<<< HEAD
-import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
-import { auth } from './lib/firebase';
-import { MainDashboard } from './components/MainDashboard';
-=======
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 import {
   Bike,
   Calendar,
@@ -52,22 +46,13 @@ import {
   Camera,
   Mic,
   Compass,
-<<<<<<< HEAD
-  BellRing,
-  Package,
-  Navigation
-=======
   BellRing
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 } from 'lucide-react';
 import { FLUTTER_CODE_FILES, BACKEND_CODE_FILES } from './code_repository';
 import { BrandLogo } from './components/BrandLogo';
 import { ArgentinaMap } from './components/ArgentinaMap';
 import { AIChatAssistant } from './components/AIChatAssistant';
-<<<<<<< HEAD
-=======
 import { FuturisticMockups } from './components/FuturisticMockups';
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 import { AdminChartsCard, MPWalletCard, IARecommendsCard } from './components/AdminComponents';
 
 // --- Types ---
@@ -215,85 +200,6 @@ const playBeepChime = (type: 'success' | 'warning' | 'info') => {
 const initialSyncState = getInitialSyncState();
 
 export default function App() {
-<<<<<<< HEAD
-  const [user, setUser] = useState<FirebaseUser | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
-
-  // Core state
-  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
-  const [repartidor, setRepartidor] = useState<Repartidor | null>(null);
-  const [turnos, setTurnos] = useState<Turno[]>([]);
-  const [entregas, setEntregas] = useState<EntregaUnica[]>([]);
-  const [walletSaldo, setWalletSaldo] = useState<number>(0);
-  const [adminSaldo, setAdminSaldo] = useState<number>(0);
-  const [adminMpSaldo, setAdminMpSaldo] = useState<number>(0);
-  const [mpHistorial, setMpHistorial] = useState<any[]>([]);
-  const [transacciones, setTransacciones] = useState<Transaccion[]>([]);
-  const [consoleLogs, setConsoleLogs] = useState<any[]>([]);
-  
-  // Portal state
-  const [activePortalView, setActivePortalView] = useState<'dashboard' | 'sandbox' | 'descarga' | 'comercio' | 'emprendedor' | 'repartidor' | 'admin'>('dashboard');
-  
-  // Custom Voice for Assistant
-  const [customVoiceId, setCustomVoiceId] = useState<string>('ByVRQtaK1WDOvTmP1PKO');
-
-  // Weather/Context Simulation placeholders
-  const [weatherCondition, setWeatherCondition] = useState('despejado');
-  const [temperature, setTemperature] = useState(20);
-  const [multiplier, setMultiplier] = useState(1);
-  const [activeTab, setActiveTab] = useState<'disponibles' | 'mision' | 'historial'>('disponibles');
-  const [phoneScreen, setPhoneScreen] = useState('home');
-  const [activeTurnoTab, setActiveTurnoTab] = useState('disponibles');
-  const [activeDeliveryId, setActiveDeliveryId] = useState<number | null>(null);
-  const [gpsSimulating, setGpsSimulating] = useState(false);
-  const [chatMessages, setChatMessages] = useState<Mensaje[]>([]);
-  const [newMsgText, setNewMsgText] = useState('');
-  const [isRecordingAudio, setIsRecordingAudio] = useState(false);
-  const [audioRecordingTimer, setAudioRecordingTimer] = useState(0);
-  const audioIntervalRef = useRef<any>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState('mockups');
-  const [activeCodeModule, setActiveCodeModule] = useState('flutter');
-  const [selectedCodeFile, setSelectedCodeFile] = useState('home_screen.dart');
-  const [copiedNotification, setCopiedNotification] = useState(false);
-  const [dbSearchTerm, setDbSearchTerm] = useState('');
-  const [activeDbTable, setActiveDbTable] = useState('usuarios');
-  const [cameraActive, setCameraActive] = useState(false);
-  const [cameraScanned, setCameraScanned] = useState(false);
-  const [micRecording, setMicRecording] = useState(false);
-  const [micResult, setMicResult] = useState('');
-  const [gpsCoords, setGpsCoords] = useState({ lat: -34.6037, lng: -58.3816 });
-  const [gyroForces, setGyroForces] = useState({ x: 0, y: 0, z: 0 });
-  const [emprendedorNombre, setEmprendedorNombre] = useState('Pastas de la Nona');
-  const [entregaOrigen, setEntregaOrigen] = useState('Av. Corrientes 1000');
-  const [entregaDestino, setEntregaDestino] = useState('Av. Corrientes 2000');
-  const [entregaTamano, setEntregaTamano] = useState('pequeño');
-  const [entregaMontoBase, setEntregaMontoBase] = useState('3500');
-  const [comercioNombre, setComercioNombre] = useState('Burger House');
-  const [comercioHorario, setComercioHorario] = useState('20:00 a 00:00');
-  const [comercioMonto, setComercioMonto] = useState('15000');
-  const [isShaking, setIsShaking] = useState(false);
-  const [phoneTheme, setPhoneTheme] = useState('dark');
-  const [phoneNotification, setPhoneNotification] = useState<any>(null);
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  const [regName, setRegName] = useState('');
-  const [regSurname, setRegSurname] = useState('');
-  const [regVehicle, setRegVehicle] = useState<'bicicleta' | 'moto' | 'auto'>('moto');
-  const [regPatent, setRegPatent] = useState('');
-  const [regPhone, setRegPhone] = useState('11223344');
-  const [regEmail, setRegEmail] = useState('');
-  const [regPassword, setRegPassword] = useState('');
-  const [gpsProgress, setGpsProgress] = useState(0);
-  
-  // --- MARKER MAPPING HELPER ---
-  const mapMarkers = useMemo(() => {
-    return [
-      ...turnos.map(t => ({ id: `c_${t.id}`, name: t.comercio_nombre, x: 67 + (Math.random() - 0.5) * 10, y: 46 + (Math.random() - 0.5) * 10, type: 'comercio' as const })),
-      ...entregas.map(e => ({ id: `e_${e.id}`, name: e.emprendedor_nombre, x: 60 + (Math.random() - 0.5) * 15, y: 39 + (Math.random() - 0.5) * 15, type: 'emprendedor' as const }))
-    ];
-  }, [turnos, entregas]);
-=======
   // --- DATABASE STATE (SIMULATED RELATIONAL DATA) ---
   const [usuarios, setUsuarios] = useState<Usuario[]>(() => initialSyncState?.usuarios || [
     { id: 1, email: 'admin@deliveryplus.com', telefono: '+541155551111', rol: 'Administrador', activo: true },
@@ -426,7 +332,6 @@ export default function App() {
   const [entregaDestino, setEntregaDestino] = useState('Gurruchaga 1550, Palermo');
   const [entregaTamano, setEntregaTamano] = useState<'pequeño' | 'mediano' | 'grande'>('mediano');
   const [entregaMontoBase, setEntregaMontoBase] = useState('3800');
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 
   // Load initial portal view from URL query param (e.g. ?portal=repartidor)
   useEffect(() => {
@@ -727,26 +632,7 @@ export default function App() {
       prev.map((t) => {
         if (t.id === id) {
           logEvent(`PATCH /api/turnos/${id}/aceptar - 200 OK - Block designated. Status updated to CONFIRMADO`, 'success');
-<<<<<<< HEAD
-          triggerNotification('Turno Asignado', `¡Turno de ${t.comercio_nombre} asignado! Debes presentarte a la hora acordada.`);
-          return { ...t, estado: 'confirmado', repartidor_id: 1 };
-        }
-        return t;
-      })
-    );
-  };
-
-  const finishShift = (id: number) => {
-    const item = turnos.find(t => t.id === id);
-    if (!item || item.estado === 'completado') return;
-    
-    setTurnos((prev) =>
-      prev.map((t) => {
-        if (t.id === id) {
-          logEvent(`PATCH /api/turnos/${id}/finalizar - 200 OK - Block finished`, 'success');
-=======
           // Add payment immediately for trial simulation
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           const shareRepartidor = t.monto_repartidor;
           const sharePlataforma = t.monto_plataforma;
 
@@ -754,10 +640,7 @@ export default function App() {
             setWalletSaldo((prevSal) => prevSal + shareRepartidor);
             setAdminSaldo((prevAdm) => prevAdm + sharePlataforma);
 
-<<<<<<< HEAD
-=======
             // Add Transactions
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             setTransacciones((trans) => [
               {
                 id: trans.length + 1,
@@ -783,11 +666,7 @@ export default function App() {
             logEvent(`[Billetera Split] 80% paid to Repartidor (+$${shareRepartidor}). 20% commission paid to Platform (+$${sharePlataforma})`, 'info');
           }, 600);
 
-<<<<<<< HEAD
-          return { ...t, estado: 'completado', repartidor_id: 1 };
-=======
           return { ...t, estado: 'confirmado', repartidor_id: 1 };
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
         }
         return t;
       })
@@ -809,52 +688,6 @@ export default function App() {
     );
   };
 
-<<<<<<< HEAD
-  const finishDelivery = (id: number) => {
-    const item = entregas.find(e => e.id === id);
-    if (!item || item.estado === 'entregado') return;
-
-    setEntregas((prev) =>
-      prev.map((e) => {
-        if (e.id === id) {
-          logEvent(`PATCH /api/entregas/${id}/estado - Status: ENTREGADO`, 'success');
-          const shareRep = e.monto_repartidor;
-          const sharePlat = e.monto_plataforma;
-
-          setWalletSaldo((wallet) => wallet + shareRep);
-          setAdminSaldo((adm) => adm + sharePlat);
-
-          setTransacciones((trans) => [
-            {
-              id: trans.length + 1,
-              tipo: 'ingreso_envio',
-              monto: shareRep,
-              saldo_anterior: walletSaldo,
-              saldo_posterior: walletSaldo + shareRep,
-              referencia: `envio_${e.id}`,
-              fecha: new Date().toISOString().replace('T', ' ').slice(0, 16)
-            },
-            {
-               id: trans.length + 2,
-               tipo: 'comision_plataforma',
-               monto: sharePlat,
-               saldo_anterior: adminSaldo,
-               saldo_posterior: adminSaldo + sharePlat,
-               referencia: `envio_${e.id}`,
-               fecha: new Date().toISOString().replace('T', ' ').slice(0, 16)
-            },
-            ...trans
-          ]);
-          logEvent(`[Billetera Split] Paid +$${shareRep} to rider, +$${sharePlat} to platform.`, 'info');
-          return { ...e, estado: 'entregado' };
-        }
-        return e;
-      })
-    );
-  };
-
-=======
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
   // Perform GPS Simulation routes
   const startGpsTracking = () => {
     if (!activeDeliveryId) return;
@@ -1077,11 +910,7 @@ CREATE TABLE \`turnos\` (
   \`monto_plataforma\` DECIMAL(10,2), -- 20% Fee
   \`estado\` ENUM('disponible','confirmado','completado')
 );`,
-<<<<<<< HEAD
-        description: 'Estructura e inicializadores de base de datos local sin dependencias Docker.'
-=======
         description: 'Estructura e inicializadores MariaDB local sin dependencias Docker.'
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
       };
     }
     const found = activeCodeFilesList.find((f) => f.name === selectedCodeFile);
@@ -1198,19 +1027,11 @@ CREATE TABLE \`turnos\` (
         <div className="flex flex-wrap items-center gap-3 text-xs">
           <div className="bg-green-success/10 text-green-success px-3 py-1.5 rounded-lg border border-green-success/15 flex items-center gap-1.5 font-semibold">
             <span className="w-2 h-2 rounded-full bg-green-success animate-ping"></span>
-<<<<<<< HEAD
-            Database Local: On
-          </div>
-          <div className="bg-blue-brand/10 text-white px-3 py-1.5 rounded-lg border border-blue-brand/15 flex items-center gap-1.5 font-mono text-[10px]">
-            <Terminal className="w-3.5 h-3.5 text-blue-brand" />
-            Port: N/A
-=======
             MariaDB Local: On
           </div>
           <div className="bg-blue-brand/10 text-white px-3 py-1.5 rounded-lg border border-blue-brand/15 flex items-center gap-1.5 font-mono text-[10px]">
             <Terminal className="w-3.5 h-3.5 text-blue-brand" />
             Port: 3000
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           </div>
         </div>
       </header>
@@ -1332,23 +1153,9 @@ CREATE TABLE \`turnos\` (
         </div>
       </div>
 
-<<<<<<< HEAD
-
-      {/* --- STANDALONE EXCLUSIVE VIEWPORT ROUTING --- */}
-      {activePortalView === 'dashboard' && <MainDashboard />}
-      {activePortalView === 'comercio' && (
-        <div className="flex-1 overflow-y-auto p-6 max-w-6xl mx-auto w-full relative z-10 space-y-6 text-left">
-          <ArgentinaMap 
-            gpsSimulating={gpsSimulating}
-            gpsProgress={gpsProgress}
-            userCoords={gpsCoords}
-            markers={mapMarkers}
-          />
-=======
       {/* --- STANDALONE EXCLUSIVE VIEWPORT ROUTING --- */}
       {activePortalView === 'comercio' && (
         <div className="flex-1 overflow-y-auto p-6 max-w-6xl mx-auto w-full relative z-10 space-y-6 text-left">
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           <div className="bg-gradient-to-r from-[#141B25] to-[#1A2534] rounded-2xl p-6 border border-orange-500/20 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
@@ -1372,26 +1179,6 @@ CREATE TABLE \`turnos\` (
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-<<<<<<< HEAD
-            {/* Empleado del Mes */}
-            <div className="lg:col-span-12 bg-gradient-to-r from-[#141B25] to-[#1A2534] border border-orange-500/20 p-5 rounded-2xl flex items-center justify-between gap-6">
-              <div className="flex items-center gap-4">
-                <div className="bg-orange-500/10 p-3 rounded-full">
-                  <Award className="w-6 h-6 text-orange-500" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-white text-lg">Empleado del Mes: Carlos Gómez</h3>
-                  <p className="text-xs text-gray-400">Excelente desempeño en entregas nocturnas. +380 entregas este mes.</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <span className="text-[10px] uppercase text-orange-400 font-bold">Ranking #1</span>
-                <div className="text-2xl font-black text-white">4.9/5</div>
-              </div>
-            </div>
-
-=======
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             {/* Form to Publish shift block */}
             <div className="lg:col-span-4 bg-[#111720]/80 border border-gray-800 p-5 rounded-2xl space-y-4">
               <h3 className="font-bold text-white text-sm uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-800 pb-2">
@@ -1547,41 +1334,13 @@ CREATE TABLE \`turnos\` (
               triggerNotification={triggerNotification}
               weatherCondition={weatherCondition}
               multiplier={multiplier}
-<<<<<<< HEAD
-              role="comercio"
-=======
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             />
           </div>
         </div>
       )}
 
-<<<<<<< HEAD
-      {activePortalView === 'descarga' && (
-        <div className="flex-1 overflow-y-auto p-6 max-w-6xl mx-auto w-full relative z-10 space-y-6 text-left flex items-center justify-center">
-          <div className="bg-gradient-to-r from-[#141B25] to-[#1A2534] rounded-2xl p-12 border border-purple-500/20 shadow-xl flex flex-col items-center gap-6 text-center max-w-lg">
-            <h2 className="text-3xl font-bold text-white">Descarga nuestra App</h2>
-            <p className="text-gray-400 text-lg">Escanea el código QR para obtener la aplicación oficial y gestionar tus entregas logísticas en tiempo real.</p>
-            <div className="bg-white p-4 rounded-xl">
-               <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://landing-deliveryplus-1nvy.vercel.app/" alt="QR de descarga" width="250" height="250" />
-            </div>
-            <a href="https://landing-deliveryplus-1nvy.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-purple-400 font-bold hover:text-purple-300 text-lg underline">Ir a la landing page oficial</a>
-          </div>
-        </div>
-      )}
-
       {activePortalView === 'emprendedor' && (
         <div className="flex-1 overflow-y-auto p-6 max-w-6xl mx-auto w-full relative z-10 space-y-6 text-left">
-          <ArgentinaMap 
-            gpsSimulating={gpsSimulating}
-            gpsProgress={gpsProgress}
-            userCoords={gpsCoords}
-            markers={mapMarkers}
-          />
-=======
-      {activePortalView === 'emprendedor' && (
-        <div className="flex-1 overflow-y-auto p-6 max-w-6xl mx-auto w-full relative z-10 space-y-6 text-left">
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           <div className="bg-gradient-to-r from-[#141B25] to-[#1A2534] rounded-2xl p-6 border border-emerald-500/20 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
@@ -1696,21 +1455,6 @@ CREATE TABLE \`turnos\` (
                   </div>
                 </div>
 
-<<<<<<< HEAD
-                <AIChatAssistant 
-                  turnos={turnos}
-                  setTurnos={setTurnos}
-                  entregas={entregas}
-                  setEntregas={setEntregas}
-                  logEvent={logEvent}
-                  triggerNotification={triggerNotification}
-                  weatherCondition={weatherCondition}
-                  multiplier={multiplier}
-                  role="emprendedor"
-                />
-
-=======
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                 <button
                   onClick={() => {
                     const base = Number(entregaMontoBase) || 3500;
@@ -1871,216 +1615,12 @@ CREATE TABLE \`turnos\` (
               triggerNotification={triggerNotification}
               weatherCondition={weatherCondition}
               multiplier={multiplier}
-<<<<<<< HEAD
-              role="emprendedor"
-=======
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             />
           </div>
         </div>
       )}
 
-<<<<<<< HEAD
-      {activePortalView === 'repartidor' && (
-        <div className="flex-1 overflow-y-auto p-6 max-w-6xl mx-auto w-full relative z-10 space-y-6 text-left">
-          <ArgentinaMap 
-            gpsSimulating={gpsSimulating}
-            gpsProgress={gpsProgress}
-            userCoords={gpsCoords}
-            markers={mapMarkers}
-          />
-          <div className="bg-gradient-to-r from-[#141B25] to-[#1A2534] rounded-2xl p-6 border border-cyan-500/20 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-              <div className="flex items-center gap-2 mb-1.5">
-                <Bike className="w-5 h-5 text-cyan-400" />
-                <h2 className="text-lg font-bold text-white tracking-tight uppercase">Portal de Repartidor Independiente</h2>
-              </div>
-              <p className="text-xs text-gray-400">Acepta turnos o encomiendas y gestiona tu balance financiero de inmediato (Split 80/20).</p>
-            </div>
-            <div className="flex gap-2.5 font-mono text-xs">
-              <div className="bg-black/30 border border-gray-800 rounded-xl px-4 py-2 text-center">
-                <span className="text-[10px] text-gray-500 block uppercase">Repartidor</span>
-                <span className="text-white font-bold">Carlos Gómez</span>
-              </div>
-              <div className="bg-[#101918] border border-cyan-500/20 rounded-xl px-4 py-2 text-center text-cyan-400">
-                <span className="text-[10px] text-gray-500 block uppercase">Billetera Activa (80%)</span>
-                <span className="font-bold flex items-center justify-center gap-1">
-                  <Wallet className="w-3.5 h-3.5" />
-                  {walletSaldo.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 })}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* COLUMN 1: JOBS AVAILABLE */}
-            <div className="lg:col-span-4 flex flex-col gap-5">
-              <div className="bg-[#111720]/80 border border-gray-800 p-5 rounded-2xl space-y-4">
-                <h3 className="font-bold text-white text-sm uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-800 pb-2">
-                  <Calendar className="w-4 h-4 text-cyan-400" />
-                  Turnos B2B Disponibles
-                </h3>
-                <div className="space-y-3">
-                  {turnos.filter(t => t.estado === 'disponible').length === 0 ? (
-                    <p className="text-gray-500 text-xs italic">No hay bloques fijos B2B disponibles por ahora.</p>
-                  ) : (
-                    turnos.filter(t => t.estado === 'disponible').map(t => (
-                      <div key={t.id} className="bg-black/30 p-3 rounded-xl border border-gray-800 flex justify-between items-center gap-3">
-                        <div className="flex flex-col">
-                           <span className="text-xs font-bold text-white">{t.comercio_nombre}</span>
-                           <span className="text-[10px] text-gray-400 capitalize">{t.horario}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                           <span className="text-orange-400 font-bold text-xs">${t.monto_repartidor}</span>
-                           <button onClick={() => acceptShift(t.id)} className="bg-cyan-500 hover:bg-cyan-600 text-black font-bold text-[10px] px-3 py-1.5 rounded-lg active:scale-95 transition-all">
-                             ACEPTAR
-                           </button>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-              
-              <div className="bg-[#111720]/80 border border-gray-800 p-5 rounded-2xl space-y-4">
-                <h3 className="font-bold text-white text-sm uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-800 pb-2">
-                  <Package className="w-4 h-4 text-cyan-400" />
-                  Entregas Express Libres
-                </h3>
-                <div className="space-y-3">
-                  {entregas.filter(e => e.estado === 'buscando_repartidor').length === 0 ? (
-                    <p className="text-gray-500 text-xs italic">No hay entregas pendientes en la zona.</p>
-                  ) : (
-                    entregas.filter(e => e.estado === 'buscando_repartidor').map(e => (
-                      <div key={e.id} className="bg-black/30 p-3 rounded-xl border border-gray-800 flex justify-between items-center gap-3">
-                        <div className="flex flex-col">
-                           <span className="text-xs font-bold text-white max-w-[120px] truncate">{e.direccion_destino}</span>
-                           <span className="text-[10px] text-gray-400 capitalize">{e.tamano}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                           <span className="text-orange-400 font-bold text-xs">${e.monto_repartidor}</span>
-                           <button onClick={() => acceptDelivery(e.id)} className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg active:scale-95 transition-all">
-                             ACEPTAR
-                           </button>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* COLUMN 2: ACTIVE JOBS & WALLET */}
-            <div className="lg:col-span-4 flex flex-col gap-5">
-              <div className="bg-[#111720]/80 border border-emerald-500/20 p-5 rounded-2xl space-y-4 shadow-lg shadow-emerald-500/5">
-                <h3 className="font-bold text-emerald-400 text-sm uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-800 pb-2">
-                  <Navigation className="w-4 h-4" />
-                  Tareas en Curso
-                </h3>
-                <div className="space-y-3">
-                  {/* Active Shifts */}
-                  {turnos.filter(t => t.estado === 'confirmado').map(t => (
-                    <div key={t.id} className="bg-emerald-900/10 p-3 rounded-xl border border-emerald-500/20 flex flex-col gap-3">
-                      <div className="flex justify-between items-start">
-                        <div className="flex flex-col">
-                           <span className="text-xs font-bold text-white">Bloque en {t.comercio_nombre}</span>
-                           <span className="text-[10px] text-emerald-400 capitalize">En proceso ({t.horario})</span>
-                        </div>
-                        <span className="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Asignado</span>
-                      </div>
-                      <button onClick={() => finishShift(t.id)} className="bg-emerald-500 hover:bg-emerald-600 text-black font-bold text-xs w-full py-2 rounded-lg active:scale-95 transition-all">
-                        FINALIZAR TURNO
-                      </button>
-                    </div>
-                  ))}
-                  
-                  {/* Active Deliveries */}
-                  {entregas.filter(e => ['asignado', 'recolectado', 'en_camino'].includes(e.estado)).map(e => (
-                    <div key={e.id} className="bg-orange-900/10 p-3 rounded-xl border border-orange-500/20 flex flex-col gap-3">
-                      <div className="flex justify-between items-start">
-                        <div className="flex flex-col">
-                           <span className="text-xs font-bold text-white">Entrega #{e.id}</span>
-                           <span className="text-[10px] text-orange-400 capitalize">{e.direccion_destino}</span>
-                        </div>
-                        <span className="bg-orange-500/20 text-orange-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">{e.estado.replace('_', ' ')}</span>
-                      </div>
-                      <button onClick={() => finishDelivery(e.id)} className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs w-full py-2 rounded-lg active:scale-95 transition-all">
-                        FINALIZAR Y COBRAR
-                      </button>
-                    </div>
-                  ))}
-
-                  {turnos.filter(t => t.estado === 'confirmado').length === 0 && entregas.filter(e => ['asignado', 'recolectado', 'en_camino'].includes(e.estado)).length === 0 && (
-                    <p className="text-gray-500 text-xs italic text-center py-2">No tienes tareas en curso en este momento.</p>
-                  )}
-                </div>
-              </div>
-
-              {/* Billetera Detail */}
-              <div className="bg-[#111720]/80 border border-gray-800 p-5 rounded-2xl space-y-4">
-                <h3 className="font-bold text-white text-sm uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-800 pb-2">
-                  <Wallet className="w-4 h-4 text-cyan-400" />
-                  Billetera Express
-                </h3>
-                <div className="flex flex-col items-center justify-center p-4 bg-black/40 rounded-xl border border-gray-800 mb-2">
-                  <span className="text-xs text-gray-500 font-mono mb-1 uppercase">Saldo Disponible (80%)</span>
-                  <span className="text-3xl font-black text-white font-display text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
-                    {walletSaldo.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 })}
-                  </span>
-                </div>
-                
-                <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mt-4">Últimas Transacciones</h4>
-                <div className="space-y-2 max-h-[180px] overflow-y-auto pr-1 custom-scrollbar">
-                  {transacciones.filter(t => t.tipo.includes('ingreso')).length === 0 ? (
-                    <p className="text-gray-500 text-xs italic">Aún no hay ingresos de tareas finalizadas.</p>
-                  ) : (
-                    transacciones.filter(t => t.tipo.includes('ingreso')).slice(0, 5).map(tx => (
-                      <div key={tx.id} className="flex justify-between items-center bg-black/30 p-2.5 rounded-lg border border-gray-800/50">
-                        <div className="flex items-center gap-2">
-                           <div className="bg-emerald-500/20 p-1.5 rounded-md text-emerald-400">
-                             {tx.tipo === 'ingreso_turno' ? <Calendar className="w-3.5 h-3.5" /> : <Package className="w-3.5 h-3.5" />}
-                           </div>
-                           <div className="flex flex-col">
-                             <span className="text-[10px] font-bold text-gray-300 uppercase">{tx.tipo.replace('_', ' ')}</span>
-                             <span className="text-[9px] text-gray-500">{tx.fecha.split(' ')[1]}</span>
-                           </div>
-                        </div>
-                        <span className="text-emerald-400 font-bold text-xs">+{tx.monto.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 })}</span>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* COLUMN 3: ASISTENTE INTELIGENTE VOZ/TEXTO ON-DEMAND DE DELIVERYPLUS */}
-            <div className="lg:col-span-4 bg-[#121A26] border border-blue-brand/20 p-5 rounded-2xl space-y-4">
-              <h3 className="font-extrabold text-white text-sm uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-800 pb-2 font-display">
-                <Sparkles className="w-4 h-4 text-blue-brand animate-pulse" />
-                Asistente Trabajo
-              </h3>
-              <p className="text-[11px] leading-tight text-gray-400">Recibe tareas, coordina rutas y conversa en modo manos libres con el sistema.</p>
-              <AIChatAssistant 
-                turnos={turnos}
-                setTurnos={setTurnos}
-                entregas={entregas}
-                setEntregas={setEntregas}
-                logEvent={logEvent}
-                triggerNotification={triggerNotification}
-                weatherCondition={weatherCondition}
-                multiplier={multiplier}
-                role="repartidor"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
       {activePortalView === 'admin' && (
-
-=======
-      {activePortalView === 'admin' && (
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
         <main className="flex-1 overflow-y-auto p-4 md:p-6 max-w-7xl mx-auto w-full relative z-10 space-y-5 text-left">
           {/* Header row – Advanced National Portal */}
           <div className="bg-gradient-to-r from-[#01020d] via-[#12132C] to-[#01020d] rounded-2xl p-6 border border-purple-500/25 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -2089,11 +1629,7 @@ CREATE TABLE \`turnos\` (
                 <Database className="w-5 h-5 text-cyan-400" />
                 <h2 className="text-lg font-bold text-white tracking-tight uppercase">Panel de Administración Global & Split Financiero</h2>
               </div>
-<<<<<<< HEAD
-              <p className="text-xs text-gray-400">Auditoría en tiempo real de transacciones, saldos, base de datos y logs de servidores Cloud Run.</p>
-=======
               <p className="text-xs text-gray-400">Auditoría en tiempo real de transacciones, saldos, bases de datos MariaDB y logs de servidores Cloud Run.</p>
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             </div>
             
             <div className="flex flex-col sm:flex-row gap-2.5 font-mono text-xs w-full md:w-auto shrink-0">
@@ -2202,16 +1738,7 @@ CREATE TABLE \`turnos\` (
 
                 {/* Simulated National Map Container */}
                 <div className="bg-[#04050a]/80 border border-gray-850 rounded-2xl p-4 flex flex-col items-center justify-center relative shadow-inner overflow-hidden min-h-[300px]">
-<<<<<<< HEAD
-                  <ArgentinaMap 
-                    gpsSimulating={false}
-                    gpsProgress={0}
-                    userCoords={gpsCoords}
-                    markers={mapMarkers}
-                  />
-=======
                   <ArgentinaMap gpsSimulating={false} gpsProgress={0} />
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                 </div>
               </div>
 
@@ -2262,16 +1789,6 @@ CREATE TABLE \`turnos\` (
           <div className="hidden pointer-events-none select-none opacity-0 max-h-0 overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
-<<<<<<< HEAD
-          {/* Gestión de Base de Datos en la Nube (Firebase) */}
-          <div className="lg:col-span-12 bg-[#111720]/80 border border-gray-800 p-5 rounded-2xl space-y-4">
-            <div className="flex items-center gap-2 border-b border-gray-800 pb-3">
-              <Database className="w-5 h-5 text-cyan-400" />
-              <span className="text-sm font-bold text-white uppercase tracking-wider">Gestión de Base de Datos en la Nube (Firebase)</span>
-            </div>
-            <p className="text-xs text-gray-400">Ahora utilizando Firebase para persistencia real y escalabilidad.</p>
-          </div>
-=======
             {/* Left: DB relational table explorer (8 columns) */}
             <div className="lg:col-span-8 bg-[#111720]/80 border border-gray-800 p-5 rounded-2xl space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-800 pb-3">
@@ -2283,7 +1800,6 @@ CREATE TABLE \`turnos\` (
                 {/* Search binding */}
                 <div className="relative">
                   <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-500" />
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                   <input
                     type="text"
                     value={dbSearchTerm}
@@ -2485,10 +2001,7 @@ CREATE TABLE \`turnos\` (
                   </table>
                 </div>
               </div>
-<<<<<<< HEAD
-=======
             </div>
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 
             {/* Right: API Logs scroll console & financial summary (4 columns) */}
             <div className="lg:col-span-4 space-y-6">
@@ -2531,11 +2044,7 @@ CREATE TABLE \`turnos\` (
                       setAdminSaldo(5000);
                       setTransacciones([
                         { id: 1, tipo: 'ingreso_turno', monto: 12000, saldo_anterior: 12000, saldo_posterior: 24000, referencia: 'turno_2', fecha: '2026-06-11 01:12' },
-<<<<<<< HEAD
-                        { id: 2, tipo: 'comision_plataforma', monto: 0, saldo_anterior: 2000, saldo_posterior: 5000, referencia: 'turno_2', fecha: '2026-06-11 01:12' }
-=======
                         { id: 2, tipo: 'comision_plataforma', monto: 3000, saldo_anterior: 2000, saldo_posterior: 5000, referencia: 'turno_2', fecha: '2026-06-11 01:12' }
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                       ]);
                       logEvent('Base de datos: Reset financiero ejecutado con éxito', 'warn');
                     }}
@@ -2574,25 +2083,14 @@ CREATE TABLE \`turnos\` (
                 </div>
               </div>
 
-<<<<<<< HEAD
-=======
             </div>
 
           </div>
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           </div>
         </main>
       )}
 
       {/* --- MAIN WORKSPACE MULTI-COLUMNS GRIDS --- */}
-<<<<<<< HEAD
-      {(activePortalView === 'sandbox') && (
-        <main className="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-12 p-4 gap-4 relative z-10">
-
-          {/* ================= LEFT COLUMN: IA & SIMULATOR CONTROL CENTER (Only in Dev Console Mode) ================= */}
-          {activeWorkspaceTab === 'consola' && (
-            <section className="lg:col-span-4 flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-100px)] pr-1">
-=======
       {(activePortalView === 'sandbox' || activePortalView === 'repartidor') && (
         <main className="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-12 p-4 gap-4 relative z-10">
 
@@ -2648,7 +2146,6 @@ CREATE TABLE \`turnos\` (
         {/* ================= LEFT COLUMN: IA & SIMULATOR CONTROL CENTER (Only in Dev Console Mode) ================= */}
         {activeWorkspaceTab === 'consola' && (
           <section className="lg:col-span-4 flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-100px)] pr-1">
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             
             {/* AI Weather widget & control center */}
             <div className="bg-[#151D25] rounded-2xl p-5 border border-gray-800 shadow-md">
@@ -2779,20 +2276,12 @@ CREATE TABLE \`turnos\` (
             </div>
           </div>
 
-<<<<<<< HEAD
-          {/* Database Table Explorer */}
-=======
           {/* MariaDB Live Database Table Explorer */}
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           <div className="bg-[#151D25] rounded-2xl p-5 border border-gray-800 shadow-md flex-1 flex flex-col min-h-[300px]">
             <div className="flex items-center justify-between mb-2">
               <h2 className="font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
                 <Database className="w-4 h-4 text-cyan-400" />
-<<<<<<< HEAD
-                Explorador de Tablas
-=======
                 MariaDB Table Explorer
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
               </h2>
               <span className="text-[10px] bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full font-mono">
                 deliveryplus.sql
@@ -2900,11 +2389,7 @@ CREATE TABLE \`turnos\` (
                   {filteredDbRows.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="p-4 text-center text-gray-500">
-<<<<<<< HEAD
-                        No se encontraron registros en la tabla.
-=======
                         No se encontraron registros en MariaDB.
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                       </td>
                     </tr>
                   ) : (
@@ -3248,10 +2733,6 @@ CREATE TABLE \`turnos\` (
                 triggerNotification={triggerNotification}
                 weatherCondition={weatherCondition}
                 multiplier={multiplier}
-<<<<<<< HEAD
-                role="comercio"
-=======
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
               />
             </div>
           </section>
@@ -3592,11 +3073,7 @@ CREATE TABLE \`turnos\` (
 
                 {/* 5. MAPA & ZONAS CALIENTES - ARGENTINA */}
                 {phoneScreen === 'mapa' && (
-<<<<<<< HEAD
-                  <ArgentinaMap gpsSimulating={gpsSimulating} gpsProgress={gpsProgress} markers={mapMarkers} />
-=======
                   <ArgentinaMap gpsSimulating={gpsSimulating} gpsProgress={gpsProgress} />
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                 )}
 
                 {/* 6. TURNOS (Bloques de 4 horas) */}
@@ -4362,10 +3839,7 @@ CREATE TABLE \`turnos\` (
         {/* ================= PREMIUM WORKSPACE TARGET: FUTURISTIC SHOWCASE MOCKUPS ================= */}
         {activeWorkspaceTab === 'mockups' && (
           <div className="lg:col-span-12 w-full overflow-y-auto max-h-[calc(100vh-120px)] pr-1 text-left">
-<<<<<<< HEAD
-=======
             <FuturisticMockups />
->>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           </div>
         )}
 

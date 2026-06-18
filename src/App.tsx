@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
+<<<<<<< HEAD
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { auth } from './lib/firebase';
 import { MainDashboard } from './components/MainDashboard';
+=======
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 import {
   Bike,
   Calendar,
@@ -49,14 +52,22 @@ import {
   Camera,
   Mic,
   Compass,
+<<<<<<< HEAD
   BellRing,
   Package,
   Navigation
+=======
+  BellRing
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 } from 'lucide-react';
 import { FLUTTER_CODE_FILES, BACKEND_CODE_FILES } from './code_repository';
 import { BrandLogo } from './components/BrandLogo';
 import { ArgentinaMap } from './components/ArgentinaMap';
 import { AIChatAssistant } from './components/AIChatAssistant';
+<<<<<<< HEAD
+=======
+import { FuturisticMockups } from './components/FuturisticMockups';
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 import { AdminChartsCard, MPWalletCard, IARecommendsCard } from './components/AdminComponents';
 
 // --- Types ---
@@ -204,6 +215,7 @@ const playBeepChime = (type: 'success' | 'warning' | 'info') => {
 const initialSyncState = getInitialSyncState();
 
 export default function App() {
+<<<<<<< HEAD
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
 
@@ -281,6 +293,140 @@ export default function App() {
       ...entregas.map(e => ({ id: `e_${e.id}`, name: e.emprendedor_nombre, x: 60 + (Math.random() - 0.5) * 15, y: 39 + (Math.random() - 0.5) * 15, type: 'emprendedor' as const }))
     ];
   }, [turnos, entregas]);
+=======
+  // --- DATABASE STATE (SIMULATED RELATIONAL DATA) ---
+  const [usuarios, setUsuarios] = useState<Usuario[]>(() => initialSyncState?.usuarios || [
+    { id: 1, email: 'admin@deliveryplus.com', telefono: '+541155551111', rol: 'Administrador', activo: true },
+    { id: 2, email: 'repartidor@test.com', telefono: '+541177772222', rol: 'Repartidor', activo: true },
+    { id: 3, email: 'trattoria@comercio.com', telefono: '+541133334444', rol: 'Comercio', activo: true },
+    { id: 4, email: 'nona@emprendedor.com', telefono: '+541144446666', rol: 'Emprendedor', activo: true }
+  ]);
+
+  const [adminMpSaldo, setAdminMpSaldo] = useState<number>(() => {
+    return initialSyncState?.adminMpSaldo ?? 482900;
+  });
+
+  const [mpHistorial, setMpHistorial] = useState<{ id: number; tipo: 'ingreso' | 'retiro' | 'transferencia'; desc: string; monto: number; fecha: string }[]>(() => {
+    return initialSyncState?.mpHistorial || [
+      { id: 1, tipo: 'ingreso', desc: 'Comisión Liquidada B2B - Burger House', monto: 3200, fecha: '2026-06-13 15:30' },
+      { id: 2, tipo: 'ingreso', desc: 'Comisión Liquidada B2B - La Trattoria', monto: 2400, fecha: '2026-06-13 12:15' },
+      { id: 3, tipo: 'retiro', desc: 'Retiro de Saldo a BNA Personal', monto: 15000, fecha: '2026-06-12 18:45' },
+      { id: 4, tipo: 'transferencia', desc: 'Envío de fondos a Cooperativa Logística', monto: 8000, fecha: '2026-06-11 09:00' }
+    ];
+  });
+
+  const [repartidor, setRepartidor] = useState<Repartidor>(() => initialSyncState?.repartidor || {
+    id: 1,
+    nombre: 'Carlos',
+    apellido: 'Gómez',
+    tipo_vehiculo: 'moto',
+    patente: '99A-XYZ8',
+    disponible: true,
+    verificado: true,
+    calificacion: 4.92,
+    total_entregas: 420,
+    entregas_a_tiempo: 412
+  });
+
+  const [turnos, setTurnos] = useState<Turno[]>(() => initialSyncState?.turnos || [
+    { id: 1, comercio_nombre: 'La Trattoria', direccion: 'Av. Santa Fe 2345, Palermo', fecha: 'Hoy', horario: '20:00 - 23:59', monto_total: 15000, monto_repartidor: 12000, monto_plataforma: 3000, estado: 'disponible' },
+    { id: 2, comercio_nombre: 'Burger House', direccion: 'Av. Córdoba 3900, Almagro', fecha: 'Hoy', horario: '12:00 - 16:00', monto_total: 18000, monto_repartidor: 14400, monto_plataforma: 3600, estado: 'completado' },
+    { id: 3, comercio_nombre: 'Burger House', direccion: 'Av. Córdoba 3900, Almagro', fecha: 'Mañana', horario: '19:00 - 23:00', monto_total: 16000, monto_repartidor: 12800, monto_plataforma: 3200, estado: 'disponible' }
+  ]);
+
+  const [entregas, setEntregas] = useState<EntregaUnica[]>(() => initialSyncState?.entregas || [
+    { id: 1, emprendedor_nombre: 'Pastas de la Nona', direccion_origen: 'Serrano 1230, Villa Crespo', direccion_destino: 'Av. Scalabrini Ortiz 2800, Palermo', tamano: 'mediano', monto_total: 3500, monto_repartidor: 2800, monto_plataforma: 700, estado: 'disponible' },
+    { id: 2, emprendedor_nombre: 'Huerta Orgánica', direccion_origen: 'Bonpland 1660, Palermo', direccion_destino: 'Arenales 3400, Recoleta', tamano: 'pequeño', monto_total: 4000, monto_repartidor: 3200, monto_plataforma: 800, estado: 'entregado' },
+    { id: 3, emprendedor_nombre: 'Huerta Orgánica', direccion_origen: 'Bonpland 1660, Palermo', direccion_destino: 'Av. Corrientes 4500, Almagro', tamano: 'grande', monto_total: 5000, monto_repartidor: 4000, monto_plataforma: 1000, estado: 'disponible' }
+  ]);
+
+  const [walletSaldo, setWalletSaldo] = useState<number>(() => initialSyncState?.walletSaldo ?? 24000);
+  const [adminSaldo, setAdminSaldo] = useState<number>(() => initialSyncState?.adminSaldo ?? 5000);
+
+  const [transacciones, setTransacciones] = useState<Transaccion[]>(() => initialSyncState?.transacciones || [
+    { id: 1, tipo: 'ingreso_turno', monto: 12000, saldo_anterior: 12000, saldo_posterior: 24000, referencia: 'turno_2', fecha: '2026-06-11 01:12' },
+    { id: 2, tipo: 'comision_plataforma', monto: 3000, saldo_anterior: 2000, saldo_posterior: 5000, referencia: 'turno_2', fecha: '2026-06-11 01:12' }
+  ]);
+
+  // --- INTERACTION & SIMULATION ---
+  const [weatherCondition, setWeatherCondition] = useState<'despejado' | 'nublado' | 'lluvia' | 'tormenta'>(() => initialSyncState?.weatherCondition || 'lluvia');
+  const [temperature, setTemperature] = useState<number>(() => initialSyncState?.temperature ?? 14.5);
+  const [multiplier, setMultiplier] = useState<number>(() => initialSyncState?.multiplier ?? 1.25);
+
+  const [consoleLogs, setConsoleLogs] = useState<{ id: string; time: string; text: string; type: 'success' | 'info' | 'warn' | 'error' }[]>(() => initialSyncState?.consoleLogs || [
+    { id: '1', time: '04:37:09', text: 'Servidor Express escuchando en puerto 3000 (Entorno Virtual local)', type: 'info' },
+    { id: '2', time: '04:37:10', text: 'Pool de conexión a MariaDB listo (Host: localhost, DB: deliveryplus)', type: 'success' }
+  ]);
+
+  // Push notifications block
+  const [phoneNotification, setPhoneNotification] = useState<{ title: string; body: string } | null>(null);
+
+  // --- NATIVE SENSOR SIMULATION STATES ---
+  const [gpsCoords, setGpsCoords] = useState<{ lat: number; lng: number }>({ lat: -34.6037, lng: -58.3816 });
+  const [cameraActive, setCameraActive] = useState<boolean>(false);
+  const [cameraScanned, setCameraScanned] = useState<boolean>(false);
+  const [micRecording, setMicRecording] = useState<boolean>(false);
+  const [micResult, setMicResult] = useState<string>('');
+  const [gyroForces, setGyroForces] = useState<{ x: number; y: number; z: number }>({ x: 0.02, y: -0.08, z: 0.99 });
+  const [isShaking, setIsShaking] = useState<boolean>(false);
+
+  // --- PHONE EMULATOR STATE ---
+  const [phoneScreen, setPhoneScreen] = useState<'splash' | 'login' | 'register' | 'home' | 'mapa' | 'turnos' | 'pedidos' | 'billetera' | 'perfil'>('splash');
+  const [phoneTheme, setPhoneTheme] = useState<'light' | 'dark'>('dark');
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [loginEmail, setLoginEmail] = useState<string>('repartidor@test.com');
+  const [loginPassword, setLoginPassword] = useState<string>('123456');
+
+  // Input bindings for Register Screen
+  const [regName, setRegName] = useState<string>('Carlos');
+  const [regSurname, setRegSurname] = useState<string>('Gómez');
+  const [regVehicle, setRegVehicle] = useState<'bicicleta' | 'moto' | 'auto'>('moto');
+  const [regPatent, setRegPatent] = useState<string>('99A-XYZ8');
+  const [regPhone, setRegPhone] = useState<string>('+541177772222');
+  const [regEmail, setRegEmail] = useState<string>('');
+  const [regPassword, setRegPassword] = useState<string>('');
+
+  // Active delivery sub-navigation
+  const [activeTab, setActiveTab] = useState<'disponibles' | 'mision' | 'historial'>('disponibles'); // pedidostab
+  const [activeTurnoTab, setActiveTurnoTab] = useState<'disponibles' | 'contratados'>('disponibles');
+  const [activeDeliveryId, setActiveDeliveryId] = useState<number | null>(null);
+  const [gpsSimulating, setGpsSimulating] = useState<boolean>(false);
+  const [gpsProgress, setGpsProgress] = useState<number>(0);
+
+  // Chat system state
+  const [chatMessages, setChatMessages] = useState<Mensaje[]>([
+    { id: 1, sender: 'emprendedor', tipo: 'texto', contenido: 'Hola Carlos, ya preparé los ravioles calientes de la Nona. Traé bolso térmico por la lluvia.' },
+    { id: 2, sender: 'repartidor', tipo: 'texto', contenido: 'Hola! Sí, tengo el thermo bag listo. Voy en camino rápido.' }
+  ]);
+  const [newMsgText, setNewMsgText] = useState<string>('');
+  const [isRecordingAudio, setIsRecordingAudio] = useState<boolean>(false);
+  const [audioRecordingTimer, setAudioRecordingTimer] = useState<number>(0);
+  const audioIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Selected database table in the explorer
+  const [activeDbTable, setActiveDbTable] = useState<'usuarios' | 'repartidores' | 'turnos' | 'entregas_unicas' | 'billeteras' | 'transacciones'>('repartidores');
+  const [dbSearchTerm, setDbSearchTerm] = useState<string>('');
+
+  // Selected code folder/file in the explorer
+  const [activeCodeModule, setActiveCodeModule] = useState<'flutter' | 'backend' | 'sql'>('flutter');
+  const [selectedCodeFile, setSelectedCodeFile] = useState<string>('home_screen.dart');
+  const [copiedNotification, setCopiedNotification] = useState<boolean>(false);
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState<'consola' | 'modulos' | 'mockups'>('mockups');
+  
+  // Independent portal view (can differ across tabs/sessions)
+  const [activePortalView, setActivePortalView] = useState<'sandbox' | 'comercio' | 'emprendedor' | 'repartidor' | 'admin'>('sandbox');
+
+  // Custom Form States for Standalone Portals
+  const [comercioNombre, setComercioNombre] = useState('Burger House');
+  const [comercioHorario, setComercioHorario] = useState('20:00 - 00:00');
+  const [comercioMonto, setComercioMonto] = useState('16000');
+
+  const [emprendedorNombre, setEmprendedorNombre] = useState('Pastas de la Nona');
+  const [entregaOrigen, setEntregaOrigen] = useState('Serrano 1230, Villa Crespo');
+  const [entregaDestino, setEntregaDestino] = useState('Gurruchaga 1550, Palermo');
+  const [entregaTamano, setEntregaTamano] = useState<'pequeño' | 'mediano' | 'grande'>('mediano');
+  const [entregaMontoBase, setEntregaMontoBase] = useState('3800');
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 
   // Load initial portal view from URL query param (e.g. ?portal=repartidor)
   useEffect(() => {
@@ -581,6 +727,7 @@ export default function App() {
       prev.map((t) => {
         if (t.id === id) {
           logEvent(`PATCH /api/turnos/${id}/aceptar - 200 OK - Block designated. Status updated to CONFIRMADO`, 'success');
+<<<<<<< HEAD
           triggerNotification('Turno Asignado', `¡Turno de ${t.comercio_nombre} asignado! Debes presentarte a la hora acordada.`);
           return { ...t, estado: 'confirmado', repartidor_id: 1 };
         }
@@ -597,6 +744,9 @@ export default function App() {
       prev.map((t) => {
         if (t.id === id) {
           logEvent(`PATCH /api/turnos/${id}/finalizar - 200 OK - Block finished`, 'success');
+=======
+          // Add payment immediately for trial simulation
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           const shareRepartidor = t.monto_repartidor;
           const sharePlataforma = t.monto_plataforma;
 
@@ -604,6 +754,10 @@ export default function App() {
             setWalletSaldo((prevSal) => prevSal + shareRepartidor);
             setAdminSaldo((prevAdm) => prevAdm + sharePlataforma);
 
+<<<<<<< HEAD
+=======
+            // Add Transactions
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             setTransacciones((trans) => [
               {
                 id: trans.length + 1,
@@ -629,7 +783,11 @@ export default function App() {
             logEvent(`[Billetera Split] 80% paid to Repartidor (+$${shareRepartidor}). 20% commission paid to Platform (+$${sharePlataforma})`, 'info');
           }, 600);
 
+<<<<<<< HEAD
           return { ...t, estado: 'completado', repartidor_id: 1 };
+=======
+          return { ...t, estado: 'confirmado', repartidor_id: 1 };
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
         }
         return t;
       })
@@ -651,6 +809,7 @@ export default function App() {
     );
   };
 
+<<<<<<< HEAD
   const finishDelivery = (id: number) => {
     const item = entregas.find(e => e.id === id);
     if (!item || item.estado === 'entregado') return;
@@ -694,6 +853,8 @@ export default function App() {
     );
   };
 
+=======
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
   // Perform GPS Simulation routes
   const startGpsTracking = () => {
     if (!activeDeliveryId) return;
@@ -916,7 +1077,11 @@ CREATE TABLE \`turnos\` (
   \`monto_plataforma\` DECIMAL(10,2), -- 20% Fee
   \`estado\` ENUM('disponible','confirmado','completado')
 );`,
+<<<<<<< HEAD
         description: 'Estructura e inicializadores de base de datos local sin dependencias Docker.'
+=======
+        description: 'Estructura e inicializadores MariaDB local sin dependencias Docker.'
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
       };
     }
     const found = activeCodeFilesList.find((f) => f.name === selectedCodeFile);
@@ -1033,11 +1198,19 @@ CREATE TABLE \`turnos\` (
         <div className="flex flex-wrap items-center gap-3 text-xs">
           <div className="bg-green-success/10 text-green-success px-3 py-1.5 rounded-lg border border-green-success/15 flex items-center gap-1.5 font-semibold">
             <span className="w-2 h-2 rounded-full bg-green-success animate-ping"></span>
+<<<<<<< HEAD
             Database Local: On
           </div>
           <div className="bg-blue-brand/10 text-white px-3 py-1.5 rounded-lg border border-blue-brand/15 flex items-center gap-1.5 font-mono text-[10px]">
             <Terminal className="w-3.5 h-3.5 text-blue-brand" />
             Port: N/A
+=======
+            MariaDB Local: On
+          </div>
+          <div className="bg-blue-brand/10 text-white px-3 py-1.5 rounded-lg border border-blue-brand/15 flex items-center gap-1.5 font-mono text-[10px]">
+            <Terminal className="w-3.5 h-3.5 text-blue-brand" />
+            Port: 3000
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           </div>
         </div>
       </header>
@@ -1159,6 +1332,7 @@ CREATE TABLE \`turnos\` (
         </div>
       </div>
 
+<<<<<<< HEAD
 
       {/* --- STANDALONE EXCLUSIVE VIEWPORT ROUTING --- */}
       {activePortalView === 'dashboard' && <MainDashboard />}
@@ -1170,6 +1344,11 @@ CREATE TABLE \`turnos\` (
             userCoords={gpsCoords}
             markers={mapMarkers}
           />
+=======
+      {/* --- STANDALONE EXCLUSIVE VIEWPORT ROUTING --- */}
+      {activePortalView === 'comercio' && (
+        <div className="flex-1 overflow-y-auto p-6 max-w-6xl mx-auto w-full relative z-10 space-y-6 text-left">
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           <div className="bg-gradient-to-r from-[#141B25] to-[#1A2534] rounded-2xl p-6 border border-orange-500/20 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
@@ -1193,6 +1372,7 @@ CREATE TABLE \`turnos\` (
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<<<<<<< HEAD
             {/* Empleado del Mes */}
             <div className="lg:col-span-12 bg-gradient-to-r from-[#141B25] to-[#1A2534] border border-orange-500/20 p-5 rounded-2xl flex items-center justify-between gap-6">
               <div className="flex items-center gap-4">
@@ -1210,6 +1390,8 @@ CREATE TABLE \`turnos\` (
               </div>
             </div>
 
+=======
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             {/* Form to Publish shift block */}
             <div className="lg:col-span-4 bg-[#111720]/80 border border-gray-800 p-5 rounded-2xl space-y-4">
               <h3 className="font-bold text-white text-sm uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-800 pb-2">
@@ -1365,12 +1547,16 @@ CREATE TABLE \`turnos\` (
               triggerNotification={triggerNotification}
               weatherCondition={weatherCondition}
               multiplier={multiplier}
+<<<<<<< HEAD
               role="comercio"
+=======
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             />
           </div>
         </div>
       )}
 
+<<<<<<< HEAD
       {activePortalView === 'descarga' && (
         <div className="flex-1 overflow-y-auto p-6 max-w-6xl mx-auto w-full relative z-10 space-y-6 text-left flex items-center justify-center">
           <div className="bg-gradient-to-r from-[#141B25] to-[#1A2534] rounded-2xl p-12 border border-purple-500/20 shadow-xl flex flex-col items-center gap-6 text-center max-w-lg">
@@ -1392,6 +1578,10 @@ CREATE TABLE \`turnos\` (
             userCoords={gpsCoords}
             markers={mapMarkers}
           />
+=======
+      {activePortalView === 'emprendedor' && (
+        <div className="flex-1 overflow-y-auto p-6 max-w-6xl mx-auto w-full relative z-10 space-y-6 text-left">
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           <div className="bg-gradient-to-r from-[#141B25] to-[#1A2534] rounded-2xl p-6 border border-emerald-500/20 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
@@ -1506,6 +1696,7 @@ CREATE TABLE \`turnos\` (
                   </div>
                 </div>
 
+<<<<<<< HEAD
                 <AIChatAssistant 
                   turnos={turnos}
                   setTurnos={setTurnos}
@@ -1518,6 +1709,8 @@ CREATE TABLE \`turnos\` (
                   role="emprendedor"
                 />
 
+=======
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                 <button
                   onClick={() => {
                     const base = Number(entregaMontoBase) || 3500;
@@ -1678,12 +1871,16 @@ CREATE TABLE \`turnos\` (
               triggerNotification={triggerNotification}
               weatherCondition={weatherCondition}
               multiplier={multiplier}
+<<<<<<< HEAD
               role="emprendedor"
+=======
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             />
           </div>
         </div>
       )}
 
+<<<<<<< HEAD
       {activePortalView === 'repartidor' && (
         <div className="flex-1 overflow-y-auto p-6 max-w-6xl mx-auto w-full relative z-10 space-y-6 text-left">
           <ArgentinaMap 
@@ -1881,6 +2078,9 @@ CREATE TABLE \`turnos\` (
 
       {activePortalView === 'admin' && (
 
+=======
+      {activePortalView === 'admin' && (
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
         <main className="flex-1 overflow-y-auto p-4 md:p-6 max-w-7xl mx-auto w-full relative z-10 space-y-5 text-left">
           {/* Header row – Advanced National Portal */}
           <div className="bg-gradient-to-r from-[#01020d] via-[#12132C] to-[#01020d] rounded-2xl p-6 border border-purple-500/25 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -1889,7 +2089,11 @@ CREATE TABLE \`turnos\` (
                 <Database className="w-5 h-5 text-cyan-400" />
                 <h2 className="text-lg font-bold text-white tracking-tight uppercase">Panel de Administración Global & Split Financiero</h2>
               </div>
+<<<<<<< HEAD
               <p className="text-xs text-gray-400">Auditoría en tiempo real de transacciones, saldos, base de datos y logs de servidores Cloud Run.</p>
+=======
+              <p className="text-xs text-gray-400">Auditoría en tiempo real de transacciones, saldos, bases de datos MariaDB y logs de servidores Cloud Run.</p>
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             </div>
             
             <div className="flex flex-col sm:flex-row gap-2.5 font-mono text-xs w-full md:w-auto shrink-0">
@@ -1998,12 +2202,16 @@ CREATE TABLE \`turnos\` (
 
                 {/* Simulated National Map Container */}
                 <div className="bg-[#04050a]/80 border border-gray-850 rounded-2xl p-4 flex flex-col items-center justify-center relative shadow-inner overflow-hidden min-h-[300px]">
+<<<<<<< HEAD
                   <ArgentinaMap 
                     gpsSimulating={false}
                     gpsProgress={0}
                     userCoords={gpsCoords}
                     markers={mapMarkers}
                   />
+=======
+                  <ArgentinaMap gpsSimulating={false} gpsProgress={0} />
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                 </div>
               </div>
 
@@ -2054,6 +2262,7 @@ CREATE TABLE \`turnos\` (
           <div className="hidden pointer-events-none select-none opacity-0 max-h-0 overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
+<<<<<<< HEAD
           {/* Gestión de Base de Datos en la Nube (Firebase) */}
           <div className="lg:col-span-12 bg-[#111720]/80 border border-gray-800 p-5 rounded-2xl space-y-4">
             <div className="flex items-center gap-2 border-b border-gray-800 pb-3">
@@ -2062,6 +2271,19 @@ CREATE TABLE \`turnos\` (
             </div>
             <p className="text-xs text-gray-400">Ahora utilizando Firebase para persistencia real y escalabilidad.</p>
           </div>
+=======
+            {/* Left: DB relational table explorer (8 columns) */}
+            <div className="lg:col-span-8 bg-[#111720]/80 border border-gray-800 p-5 rounded-2xl space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-800 pb-3">
+                <div className="flex items-center gap-2">
+                  <Database className="w-5 h-5 text-cyan-400" />
+                  <span className="text-sm font-bold text-white uppercase tracking-wider">Explorador de Base de Datos MariaDB</span>
+                </div>
+                
+                {/* Search binding */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-500" />
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                   <input
                     type="text"
                     value={dbSearchTerm}
@@ -2263,6 +2485,10 @@ CREATE TABLE \`turnos\` (
                   </table>
                 </div>
               </div>
+<<<<<<< HEAD
+=======
+            </div>
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 
             {/* Right: API Logs scroll console & financial summary (4 columns) */}
             <div className="lg:col-span-4 space-y-6">
@@ -2305,7 +2531,11 @@ CREATE TABLE \`turnos\` (
                       setAdminSaldo(5000);
                       setTransacciones([
                         { id: 1, tipo: 'ingreso_turno', monto: 12000, saldo_anterior: 12000, saldo_posterior: 24000, referencia: 'turno_2', fecha: '2026-06-11 01:12' },
+<<<<<<< HEAD
                         { id: 2, tipo: 'comision_plataforma', monto: 0, saldo_anterior: 2000, saldo_posterior: 5000, referencia: 'turno_2', fecha: '2026-06-11 01:12' }
+=======
+                        { id: 2, tipo: 'comision_plataforma', monto: 3000, saldo_anterior: 2000, saldo_posterior: 5000, referencia: 'turno_2', fecha: '2026-06-11 01:12' }
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                       ]);
                       logEvent('Base de datos: Reset financiero ejecutado con éxito', 'warn');
                     }}
@@ -2344,17 +2574,81 @@ CREATE TABLE \`turnos\` (
                 </div>
               </div>
 
+<<<<<<< HEAD
+=======
+            </div>
+
+          </div>
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           </div>
         </main>
       )}
 
       {/* --- MAIN WORKSPACE MULTI-COLUMNS GRIDS --- */}
+<<<<<<< HEAD
       {(activePortalView === 'sandbox') && (
         <main className="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-12 p-4 gap-4 relative z-10">
 
           {/* ================= LEFT COLUMN: IA & SIMULATOR CONTROL CENTER (Only in Dev Console Mode) ================= */}
           {activeWorkspaceTab === 'consola' && (
             <section className="lg:col-span-4 flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-100px)] pr-1">
+=======
+      {(activePortalView === 'sandbox' || activePortalView === 'repartidor') && (
+        <main className="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-12 p-4 gap-4 relative z-10">
+
+          {/* ================= REPARTIDOR PORTAL DESCRIPTIVE SIDEBAR ================= */}
+          {activePortalView === 'repartidor' && (
+            <section className="lg:col-span-8 flex flex-col gap-5 overflow-y-auto max-h-[calc(100vh-100px)] pr-2 text-left relative z-10 select-none">
+              {/* Beautiful Flutter driver portal introduction card */}
+              <div className="bg-gradient-to-r from-[#141B25] to-[#1A2534] rounded-2xl p-6 border border-indigo-500/25 shadow-lg relative overflow-hidden">
+                <div className="absolute -top-16 -right-16 w-48 h-48 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none" />
+                <div className="flex items-center gap-2.5 mb-2">
+                  <Bike className="w-5 h-5 text-indigo-400 animate-pulse" />
+                  <h2 className="text-base font-extrabold text-white tracking-tight uppercase">App de Repartidores (Carlos Gómez) • Pruebas Multi-Sesión</h2>
+                </div>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Esta sección simula el teléfono celular del repartidor principal, <strong>Carlos Gómez</strong>. En condiciones reales, los fleteros operan en su vehículo (moto) mediante una aplicación nativa. Aquí puedes interactuar con el teléfono para ensayar misiones.
+                </p>
+                
+                {/* Live wallet/rider status dashboard */}
+                <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-xs font-mono">
+                  <div className="bg-black/40 border border-gray-800 p-3 rounded-xl flex flex-col justify-center items-center gap-0.5">
+                    <span className="text-gray-500 text-[9px] uppercase">Rider Sincronizado</span>
+                    <span className="text-white font-bold text-sm">Carlos Gómez</span>
+                  </div>
+                  <div className="bg-black/40 border border-gray-800 p-3 rounded-xl flex flex-col justify-center items-center gap-0.5">
+                    <span className="text-gray-500 text-[9px] uppercase">Billetera Express (80%)</span>
+                    <span className="text-orange-400 font-extrabold text-sm">
+                      {walletSaldo.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 })}
+                    </span>
+                  </div>
+                  <div className="bg-black/40 border border-gray-800 p-3 rounded-xl flex flex-col justify-center items-center gap-0.5">
+                    <span className="text-emerald-450 text-emerald-450 text-emerald-400 text-[9px] font-bold uppercase">Estado GPS</span>
+                    <span className="text-emerald-450 font-bold">En Línea</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Instruction cards */}
+              <div className="bg-[#111720]/80 border border-gray-850 p-5 rounded-2xl space-y-3">
+                <h3 className="font-bold text-white text-xs uppercase tracking-wider flex items-center gap-1.5 border-b border-gray-800 pb-2">
+                  <Sliders className="w-4 h-4 text-indigo-400" />
+                  ¿Cómo probar el flujo sincronizado entre pestañas?
+                </h3>
+                <ol className="list-decimal pl-5 text-xs text-gray-400 space-y-2 leading-relaxed">
+                  <li>Abre el <a href="/?portal=comercio" target="_blank" rel="noreferrer" className="text-orange-405 text-orange-400 hover:underline font-bold inline-flex items-center gap-0.5">Portal de Comercios <ArrowUpRight className="w-3 h-3" /></a> en una pestaña y colócala al lado de ésta.</li>
+                  <li>Publica un turno furgón de 4 horas o despacha un envío. Verás cómo suena un timbre y se muestra una <strong>Alerta Push</strong> en el teléfono celular de Carlos de manera instantánea!</li>
+                  <li>En este teléfono celular, ve a la sección de <strong>"Turnos"</strong> o <strong>"Pedidos"</strong>, acepta la misión y mira las actualizaciones en la pestaña del comercio en tiempo real.</li>
+                  <li>Simula el recorrido en el mapa utilizando el botón de GPS en el teléfono para despachar el envío. El dinero se distribuirá automáticamente en el split <strong>80/20</strong>!</li>
+                </ol>
+              </div>
+            </section>
+          )}
+        
+        {/* ================= LEFT COLUMN: IA & SIMULATOR CONTROL CENTER (Only in Dev Console Mode) ================= */}
+        {activeWorkspaceTab === 'consola' && (
+          <section className="lg:col-span-4 flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-100px)] pr-1">
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
             
             {/* AI Weather widget & control center */}
             <div className="bg-[#151D25] rounded-2xl p-5 border border-gray-800 shadow-md">
@@ -2485,12 +2779,20 @@ CREATE TABLE \`turnos\` (
             </div>
           </div>
 
+<<<<<<< HEAD
           {/* Database Table Explorer */}
+=======
+          {/* MariaDB Live Database Table Explorer */}
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           <div className="bg-[#151D25] rounded-2xl p-5 border border-gray-800 shadow-md flex-1 flex flex-col min-h-[300px]">
             <div className="flex items-center justify-between mb-2">
               <h2 className="font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
                 <Database className="w-4 h-4 text-cyan-400" />
+<<<<<<< HEAD
                 Explorador de Tablas
+=======
+                MariaDB Table Explorer
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
               </h2>
               <span className="text-[10px] bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full font-mono">
                 deliveryplus.sql
@@ -2598,7 +2900,11 @@ CREATE TABLE \`turnos\` (
                   {filteredDbRows.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="p-4 text-center text-gray-500">
+<<<<<<< HEAD
                         No se encontraron registros en la tabla.
+=======
+                        No se encontraron registros en MariaDB.
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                       </td>
                     </tr>
                   ) : (
@@ -2942,7 +3248,10 @@ CREATE TABLE \`turnos\` (
                 triggerNotification={triggerNotification}
                 weatherCondition={weatherCondition}
                 multiplier={multiplier}
+<<<<<<< HEAD
                 role="comercio"
+=======
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
               />
             </div>
           </section>
@@ -3283,7 +3592,11 @@ CREATE TABLE \`turnos\` (
 
                 {/* 5. MAPA & ZONAS CALIENTES - ARGENTINA */}
                 {phoneScreen === 'mapa' && (
+<<<<<<< HEAD
                   <ArgentinaMap gpsSimulating={gpsSimulating} gpsProgress={gpsProgress} markers={mapMarkers} />
+=======
+                  <ArgentinaMap gpsSimulating={gpsSimulating} gpsProgress={gpsProgress} />
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
                 )}
 
                 {/* 6. TURNOS (Bloques de 4 horas) */}
@@ -4049,6 +4362,10 @@ CREATE TABLE \`turnos\` (
         {/* ================= PREMIUM WORKSPACE TARGET: FUTURISTIC SHOWCASE MOCKUPS ================= */}
         {activeWorkspaceTab === 'mockups' && (
           <div className="lg:col-span-12 w-full overflow-y-auto max-h-[calc(100vh-120px)] pr-1 text-left">
+<<<<<<< HEAD
+=======
+            <FuturisticMockups />
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
           </div>
         )}
 

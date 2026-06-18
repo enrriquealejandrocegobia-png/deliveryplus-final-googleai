@@ -49,6 +49,10 @@ interface AIChatAssistantProps {
   triggerNotification: (title: string, desc: string, icon: string) => void;
   weatherCondition: string;
   multiplier: number;
+<<<<<<< HEAD
+  role: 'comercio' | 'emprendedor' | 'repartidor';
+=======
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 }
 
 interface ChatMessage {
@@ -70,7 +74,12 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({
   logEvent,
   triggerNotification,
   weatherCondition,
+<<<<<<< HEAD
+  multiplier,
+  role
+=======
   multiplier
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -86,15 +95,28 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({
   const [isRecording, setIsRecording] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [recordingSeconds, setRecordingSeconds] = useState(0);
+<<<<<<< HEAD
+  const [userRole, setUserRole] = useState<'comercio' | 'emprendedor' | 'repartidor'>(role);
+
+  // Cloned Voice Custom State Options
+=======
   const [userRole, setUserRole] = useState<'comercio' | 'emprendedor'>('comercio');
 
   // Cloned Voice Custom State Options
   const [voiceProfile, setVoiceProfile] = useState<'carlos' | 'agustina' | 'vendedor_bot'>('carlos');
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
   const [voicePitch, setVoicePitch] = useState<number>(0.85); // Deeper premium operator sound
   const [voiceRate, setVoiceRate] = useState<number>(0.95);  // Professional speed pace
   const [isPlayingVoice, setIsPlayingVoice] = useState<boolean>(false);
   const [activeSpeechText, setActiveSpeechText] = useState<string>('');
   const [isFetchingVoice, setIsFetchingVoice] = useState<boolean>(false);
+<<<<<<< HEAD
+  const [customVoiceId, setCustomVoiceId] = useState<string>('ByVRQtaK1WDOvTmP1PKO');
+  const activeAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Dynamic ElevenLabs Override Credentials
+  const [apiError, setApiError] = useState<string | null>(null);
+=======
   const activeAudioRef = useRef<HTMLAudioElement | null>(null);
 
   // Dynamic ElevenLabs Override Credentials
@@ -123,6 +145,7 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({
   useEffect(() => {
     localStorage.setItem('elevenlabs_custom_voice_id', customVoiceId);
   }, [customVoiceId]);
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -166,6 +189,11 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({
     };
   }, [isRecording, isPlayingVoice, isThinking]);
 
+<<<<<<< HEAD
+  // Speech synthesizer engine using browser native speech as stable fallback
+  const speakClonedVoice = (textToVocalize: string) => {
+    // Clean text
+=======
   // Cloned voice speech synthesizer engine utilizing ElevenLabs and native fallback
   const speakClonedVoice = async (textToVocalize: string) => {
     if (typeof window === 'undefined') return;
@@ -175,6 +203,7 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({
     setApiError(null);
 
     // Clean markdown, symbols or headers before vocalization
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
     const cleanText = textToVocalize
       .replace(/\s\*/g, '')
       .replace(/\*(.*?)\*/g, '$1')
@@ -185,6 +214,10 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({
 
     if (!cleanText) return;
 
+<<<<<<< HEAD
+    logEvent(`Iniciando síntesis nativa (Fallback): "${cleanText.substring(0, 45)}..."`, 'info');
+    fallbackToWebSpeech(cleanText);
+=======
     setIsFetchingVoice(true);
     logEvent(`Iniciando síntesis de voz clonada de ElevenLabs: "${cleanText.substring(0, 45)}..."`, 'info');
 
@@ -275,6 +308,7 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({
 
       fallbackToWebSpeech(cleanText);
     }
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
   };
 
   // Resilient fallback speech engine using built-in high tracking TTS
@@ -286,7 +320,20 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({
       utterance.rate = voiceRate;
 
       const availableVoices = window.speechSynthesis.getVoices();
+<<<<<<< HEAD
+      
+      // Try to find better quality voices (Google/Microsoft preferred)
+      let selectedVoice = availableVoices.find(v => v.lang.startsWith('es') && (v.name.includes('Google') || v.name.includes('Microsoft')) && v.name.toLowerCase().includes('argentina'));
+      if (!selectedVoice) {
+        selectedVoice = availableVoices.find(v => v.lang.startsWith('es') && (v.name.includes('Google') || v.name.includes('Microsoft')));
+      }
+      if (!selectedVoice) {
+        selectedVoice = availableVoices.find(v => v.lang.startsWith('es') && v.name.toLowerCase().includes('argentina'));
+      }
+      
+=======
       let selectedVoice = availableVoices.find(v => v.lang.startsWith('es') && v.name.toLowerCase().includes('argentina'));
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
       if (!selectedVoice) {
         selectedVoice = availableVoices.find(v => v.lang.startsWith('es-AR')) || 
                         availableVoices.find(v => v.lang.startsWith('es')) || 
@@ -299,7 +346,11 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({
       utterance.onstart = () => {
         setIsPlayingVoice(true);
         setActiveSpeechText(text);
+<<<<<<< HEAD
+        logEvent(`Límite / Modo Offline: Fallback de voz activo (Default)`, 'warn');
+=======
         logEvent(`Límite / Modo Offline: Fallback de voz activo (${voiceProfile.toUpperCase()})`, 'warn');
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
       };
 
       utterance.onend = () => {
@@ -383,6 +434,23 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({
         audioTrans: 'Hola, tengo una entrega rápida de Yerba Orgánica para retirar en Cabrera 3400 y llevar a Santa Fe cuatro mil por tres mil doscientos pesos.',
         ttsTarget: 'Yerba Orgánica despacha paquete pequeño hacia Avenida Santa Fe cuatro mil. Se ha programado alerta GPS para el pool de repartos.'
       }
+<<<<<<< HEAD
+    ],
+    repartidor: [
+      {
+        label: '🛵 Tomar Turno Burger House',
+        text: 'Aceptar el turno de Burger House a las 20:00.',
+        audioTrans: 'Hola asistente, quiero reservar el turno fijo de Burger House de las 20 horas.',
+        ttsTarget: 'Has aceptado el turno fijo para Burger House con inicio a las 20 horas.'
+      },
+      {
+        label: '🛵 Aceptar Envío Pastas de la Nona',
+        text: 'Tomar envío de Pastas de la Nona a Serrano 1100',
+        audioTrans: 'Acepto el viaje pendiente de Pastas de la Nona hacia Serrano mil cien, voy en camino.',
+        ttsTarget: 'Ruta confirmada para el viaje desde Pastas de la Nona. Que tengas buen viaje.'
+      }
+=======
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
     ]
   };
 
@@ -597,6 +665,25 @@ He procesado la solicitud e ingresé la encomienda exprés de inmediato:
         {/* Selected Role Slider & Custom Config Panel */}
         <div className="flex bg-[#111111] p-1 rounded-lg text-[9px] font-mono border border-gray-brand self-start sm:self-auto gap-1">
           <button 
+<<<<<<< HEAD
+             onClick={() => setUserRole('comercio')}
+             className={`px-3 py-1 rounded transition-all cursor-pointer font-bold uppercase tracking-wider ${userRole === 'comercio' ? 'bg-white text-black' : 'text-gray-400 hover:text-white'}`}
+           >
+             🏢 Comercio
+           </button>
+           <button 
+             onClick={() => setUserRole('emprendedor')}
+             className={`px-3 py-1 rounded transition-all cursor-pointer font-bold uppercase tracking-wider ${userRole === 'emprendedor' ? 'bg-white text-black' : 'text-gray-400 hover:text-white'}`}
+           >
+             📦 Emprendedor
+           </button>
+           <button 
+             onClick={() => setUserRole('repartidor')}
+             className={`px-3 py-1 rounded transition-all cursor-pointer font-bold uppercase tracking-wider ${userRole === 'repartidor' ? 'bg-white text-black' : 'text-gray-400 hover:text-white'}`}
+           >
+             🛵 Repartidor
+           </button>
+=======
             onClick={() => {
               setShowConfigCollapse(!showConfigCollapse);
               fallbackSoundBeep();
@@ -621,12 +708,16 @@ He procesado la solicitud e ingresé la encomienda exprés de inmediato:
           >
             📦 Emprendedor
           </button>
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
         </div>
       </div>
 
       {/* CLONED VOICE BIOMETRIC CONTROL PANEL (Uber minimalist parameters) */}
       <div className="bg-[#0A0A0A] border-b border-gray-brand px-5 py-3.5 z-10 grid grid-cols-1 md:grid-cols-3 gap-4 items-center text-[10px]">
         
+<<<<<<< HEAD
+        {/* Control Panels */}
+=======
         {/* Profile Selector */}
         <div className="space-y-1">
           <span className="text-gray-500 font-bold uppercase tracking-widest block font-mono text-[8px]">Biometría de Voz Clonada</span>
@@ -645,6 +736,7 @@ He procesado la solicitud e ingresé la encomienda exprés de inmediato:
           </select>
         </div>
 
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
         {/* Pitch Control */}
         <div className="space-y-1">
           <div className="flex justify-between items-center text-[8px] font-mono text-gray-500">
@@ -681,6 +773,8 @@ He procesado la solicitud e ingresé la encomienda exprés de inmediato:
 
       </div>
 
+<<<<<<< HEAD
+=======
       {/* ELEVENLABS CUSTOM CREDENTIALS EXPANDER */}
       {showConfigCollapse && (
         <div className="bg-[#0b0b0b] border-b border-gray-brand p-4 space-y-3.5 z-10 text-[10px] font-mono shadow-inner select-none animate-fadeIn">
@@ -762,6 +856,7 @@ He procesado la solicitud e ingresé la encomienda exprés de inmediato:
           </div>
         </div>
       )}
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
 
       {/* DIAGNÓSTICO DE ERROR DE PERMISOS ELEVENLABS */}
       {apiError && (
@@ -787,6 +882,28 @@ He procesado la solicitud e ingresé la encomienda exprés de inmediato:
                 <>
                   <button
                     onClick={() => {
+<<<<<<< HEAD
+                      setCustomVoiceId('ByVRQtaK1WDOvTmP1PKO'); // Voz 1
+                      setApiError(null);
+                      logEvent("Cambio de voz instantáneo: se activó Voz 1", "info");
+                    }}
+                    className="text-[8.5px] bg-green-950/80 hover:bg-green-900 text-green-200 border border-green-800/60 font-bold font-mono uppercase tracking-widest px-2.5 py-1 rounded transition-all cursor-pointer animate-pulse"
+                  >
+                    👨‍💼 Cambiar a Voz 1 (Masculino)
+                  </button>
+                  <button
+                    onClick={() => {
+                      setCustomVoiceId('4wDRKlxcHNOFO5kBvE81'); // Voz 3
+                      setApiError(null);
+                      logEvent("Cambio de voz instantáneo: se activó Voz 3", "info");
+                    }}
+                    className="text-[8.5px] bg-green-950/80 hover:bg-green-900 text-green-200 border border-green-800/60 font-bold font-mono uppercase tracking-widest px-2.5 py-1 rounded transition-all cursor-pointer animate-pulse"
+                  >
+                    👩‍💼 Cambiar a Voz 3 (Femenina)
+                  </button>
+                </>
+              )}
+=======
                       setCustomVoiceId('21m00Tcm4TlvDq8ikWAM'); // Rachel
                       setApiError(null);
                       logEvent("Cambio de voz instantáneo: se activó Rachel (Voz oficial gratuita)", "info");
@@ -813,6 +930,7 @@ He procesado la solicitud e ingresé la encomienda exprés de inmediato:
               >
                 Ingresar API Key / Voz Alternativa
               </button>
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
               <a 
                 href="https://elevenlabs.io/app/settings/api-keys"
                 target="_blank"
@@ -965,7 +1083,11 @@ He procesado la solicitud e ingresé la encomienda exprés de inmediato:
                 className="mt-1 text-[8px] font-mono text-gray-500 hover:text-white uppercase tracking-wider flex items-center gap-1 transition-colors pl-2 self-start"
                 title="Sintetizar respuesta con voz clonada configurada"
               >
+<<<<<<< HEAD
+                <Volume2 className="w-2.5 h-2.5 text-blue-brand" /> Escuchar con Voz Clonada (ElevenLabs)
+=======
                 <Volume2 className="w-2.5 h-2.5 text-blue-brand" /> Escuchar con Voz Clonada ({voiceProfile})
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
               </button>
             )}
 

@@ -151,7 +151,11 @@ No agregues markdown adicional, explicaciones por fuera del JSON, ni barras inve
       
       const voiceId = typeof req.body.voiceId === "string" && req.body.voiceId.trim() !== ""
         ? req.body.voiceId.trim()
+<<<<<<< HEAD
+        : (process.env.ELEVENLABS_VOICE_ID || "4wDRKlxcHNOFO5kBvE81"); // Use ENV var or Default Voice ID
+=======
         : "4wDRKlxcHNOFO5kBvE81"; // Default Voice ID provided by the user
+>>>>>>> 2ee76a89e1a79256e0905d1cd7512cae7a1aef92
       
       const elevenlabsUrl = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
 
